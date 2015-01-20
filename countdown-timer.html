@@ -1,0 +1,43 @@
+<link rel="import" href="../polymer/polymer.html">
+<script src="../countdownjs-mirror/countdown.js"></script>
+
+<!--
+Provide a simple countdown clock to the specified time. Extends the `time`
+element to be semantically correct. Leverages [Countdown.js](http://countdownjs.org).
+
+### Example
+
+    <time is="countdown-timer" datetime="2016-01-01T0:00+0:00">New Year's Day</time>
+
+@element countdown-timer
+@blurb Simple auto-updating countdown timer to a specific date/time.
+@status alpha
+@homepage http://elements.divshot.io/countdown-timer
+-->
+<polymer-element name="countdown-timer" attributes="datetime" extends="time">
+
+  <template></template>
+
+  <script>
+    Polymer({
+      /**
+       * The JS-parseable [date-time](http://www.w3.org/TR/html-markup/datatypes.html#common.data.datetime)
+       * that we're counting down to.
+       *
+       * @attribute datetime
+       * @type String
+       */
+      datetime: null,
+      ready: function() {
+        this.interval = setInterval(function() {
+          this.updateString();
+        }.bind(this), 1000);
+      },
+      updateString: function() {
+        this.shadowRoot.innerHTML = countdown(new Date(this.datetime)).toHTML();
+      }
+    });
+
+  </script>
+
+</polymer-element>
